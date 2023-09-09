@@ -1,10 +1,11 @@
-package com.farmani.xreminder
+package com.farmani.xreminder.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.farmani.xreminder.R
 
 class AddReminderFragment : Fragment() {
 

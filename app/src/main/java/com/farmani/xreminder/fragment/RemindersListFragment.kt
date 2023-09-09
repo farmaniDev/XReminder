@@ -1,12 +1,11 @@
-package com.farmani.xreminder
+package com.farmani.xreminder.fragment
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import androidx.navigation.Navigation
+import com.farmani.xreminder.R
 
 class RemindersListFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {

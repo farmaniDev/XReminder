@@ -1,7 +1,8 @@
-package com.farmani.xreminder
+package com.farmani.xreminder.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.farmani.xreminder.R
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
