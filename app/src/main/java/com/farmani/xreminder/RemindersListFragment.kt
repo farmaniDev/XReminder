@@ -23,9 +23,5 @@ class RemindersListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val textView = view.findViewById<TextView>(R.id.tv)
-        textView.setOnClickListener {
-            Navigation.findNavController(textView).navigate(R.id.action_remindersListFragment_to_addReminderFragment)
-        }
     }
 }
