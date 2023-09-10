@@ -1,18 +1,29 @@
 package com.farmani.xreminder.utils
 
-import android.content.Context
 import androidx.fragment.app.FragmentManager
+import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
+import java.text.SimpleDateFormat
+import java.util.Locale
+import java.util.TimeZone
 
-class Picker(var context: Context, var fragmentManager: FragmentManager) {
+class Picker(private var fragmentManager: FragmentManager) {
     init {
         makeDatePicker()
         makeTimePicker()
     }
 
     private fun makeDatePicker() {
-        TODO("Not yet implemented")
+        val datePicker =
+            MaterialDatePicker.Builder.datePicker().setTitleText("Select Date").build()
+        datePicker.show(fragmentManager, "reminderDatePicker")
+        datePicker.addOnPositiveButtonClickListener {
+            val outputDateFormat = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault())
+            outputDateFormat.timeZone = TimeZone.getTimeZone("UTC")
+            date = outputDateFormat.format(it)
+        }
+
     }
 
     private fun makeTimePicker() {
