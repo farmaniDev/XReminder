@@ -9,7 +9,11 @@ import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.farmani.xreminder.R
+import com.farmani.xreminder.fragment.dataStore
+import com.farmani.xreminder.fragment.remindersListBinding
 import com.farmani.xreminder.model.Reminder
+import kotlinx.collections.immutable.mutate
+import kotlinx.coroutines.runBlocking
 
 class ReminderAdapter(var reminderList: MutableList<Reminder>, var context: Context) :
     RecyclerView.Adapter<ReminderAdapter.ViewHolder>() {
@@ -20,7 +24,24 @@ class ReminderAdapter(var reminderList: MutableList<Reminder>, var context: Cont
         var memo = itemView.findViewById<TextView>(R.id.memoTV)
         var date = itemView.findViewById<TextView>(R.id.dateTV)
         var time = itemView.findViewById<TextView>(R.id.timeTV)
-        var completed = itemView.findViewById<CheckBox>(R.id.completedCB)
+        var isCompleted = itemView.findViewById<CheckBox>(R.id.completedCB)
+
+        init {
+            isCompleted.setOnCheckedChangeListener { button, isChecked ->
+                if (isChecked) {
+                    runBlocking {
+                        context.dataStore.updateData {
+                            it.copy(
+                                it.remindersList.mutate {
+                                    it.removeAt(adapterPosition)
+                                }
+                            )
+                        }
+                    }
+                    remindersListBinding.recyclerView.adapter!!.notifyItemRemoved(adapterPosition)
+                }
+            }
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -35,7 +56,7 @@ class ReminderAdapter(var reminderList: MutableList<Reminder>, var context: Cont
             memo.text = reminderList[position].memo
             date.text = reminderList[position].date
             time.text = reminderList[position].time
-            completed.isChecked = reminderList[position].completed
+            isCompleted.isChecked = reminderList[position].completed
         }
     }
 
