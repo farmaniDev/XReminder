@@ -1,9 +1,15 @@
 package com.farmani.xreminder.fragment
 
+import android.Manifest
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.RequiresApi
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.Navigation
@@ -28,11 +34,13 @@ class RemindersListFragment : Fragment() {
     ): View {
         remindersListBinding = FragmentRemindersListBinding.inflate(inflater, container, false)
         return remindersListBinding.root
+
     }
 
     // This method is called once
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         remindersListBinding.addReminderBtn.setOnClickListener {
             Navigation.findNavController(remindersListBinding.addReminderBtn)
                 .navigate(R.id.action_remindersListFragment_to_addReminderFragment)

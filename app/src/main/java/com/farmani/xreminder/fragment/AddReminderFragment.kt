@@ -1,10 +1,13 @@
 package com.farmani.xreminder.fragment
 
 import android.content.Context
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.RequiresApi
 import androidx.datastore.dataStore
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
@@ -13,6 +16,7 @@ import com.farmani.xreminder.R
 import com.farmani.xreminder.databinding.FragmentAddReminderBinding
 import com.farmani.xreminder.db.RemindersListSerializer
 import com.farmani.xreminder.model.Reminder
+import com.farmani.xreminder.notification.Notification
 import com.farmani.xreminder.utils.Picker
 import com.farmani.xreminder.utils.date
 import com.farmani.xreminder.utils.hour
@@ -36,6 +40,7 @@ class AddReminderFragment : Fragment() {
         return binding.root
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.dateTimeInputET.setOnClickListener {
@@ -59,6 +64,15 @@ class AddReminderFragment : Fragment() {
                         }
                     )
                 }
+
+                Notification(
+                    newReminder.title,
+                    newReminder.memo,
+                    requireContext(),
+                    newReminder.hashCode().toString(),
+                    newReminder
+                )
+
                 Navigation.findNavController(binding.saveBtn)
                     .navigate(R.id.action_addReminderFragment_to_remindersListFragment)
             }
